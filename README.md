@@ -5,6 +5,7 @@ This is just a way to document my findings regarding the board of my AJAZZ AK820
 ## TODO List - Perhaps some kind souls will add QMK support for it
 - [ ] map lcd module connections
 - [ ] map indicators led (Caps lock, Win lock)
+- [ ] Mac/Win switch wiring
 - [ ] check connections
 
 ## Chips
@@ -51,8 +52,9 @@ This is just a way to document my findings regarding the board of my AJAZZ AK820
 
 ## MCU-Diagram - mac/win and bt/off/cable dip switches
 
-- Bluetooth / O / Cable Mode: pin 57
-- Win - Android / Mac - iOS Mode: pin 58
+- Bluetooth Mode: pin 36
+- 2.4 Ghz Mode: pin 37
+- Win - Android / Mac - iOS Mode: ????
 
 ## MCU-Diagram - Status LED indicators - K4 v2 only
 - Caps Lock: pin 46
