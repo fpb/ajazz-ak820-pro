@@ -71,8 +71,26 @@ Col RGB pin is connected to PNP transistor (E) - VDD, (B) - GPIO, (C) - LED +
 ## Bluetooth module Pinout
 ![Bluetooth-Pins](./img/wch-ch582f-pinout.png)
 
+### MCU-BT Module wiring
+| MCU |  BT |
+|-----|-----|
+|  61 |  3  |
+|  60 |  4  |
+|  ?? |  27 |
+|  ?? |  28 |
+|  ?? |  10 |
+
 ## Flash Pinout
 ![Flash-Pins](./img/py25q128ha-pinout.png)
 
-
+| MCU | Flash |
+|-----|-------|
+|  48 |   1   |
+|  62 |   2   |
+|  71 |   3   |
+|     |   4   |
+|  63 |   5   |
+|  49 |   6   |
+|  57 |   7   |
+|     |   8   |
 
