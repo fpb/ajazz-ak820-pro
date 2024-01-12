@@ -62,7 +62,7 @@ This is just a way to document my findings regarding the board of my AJAZZ AK820
 - Num Lock: pin ??
 
 ## MCU Pinout - SN32F248BF
-![MCU-Pins](./img/MCU_SN32F248BF.png)
+![MCU-Pins](./img/MCU_SN32F299-pinout.png)
 
 ## Bluetooth module
 ![k4-bluetooth-CYW20730.png](./img/K4-bt-CYW20730.png)
