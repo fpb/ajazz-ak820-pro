@@ -12,9 +12,9 @@ This is just a way to document my findings regarding the board of my AJAZZ AK820
 ![mcu-hfd](./img/mcu-hfd80cp100.jpg)
 
 * Bt module [WCH CH582F]([https://www.infinite-electronic.ru/datasheet/2a-CYW20730A2KFBG.pdf](https://www.wch-ic.com/products/CH583.html?)https://www.wch-ic.com/products/CH583.html?)
-  [ak820-bt](./img/ap820pro-bt.png)
+  ![ak820-bt](./img/ak820pro-bt.png)
 
-* External 16MB flash module [PY25Q128HA](https://puyasemi.com/uploadfiles/2022/09/20220913130446446.pdf)
+* External 16MB flash module [PY25Q128HA](https://puyasemi.com/uploadfiles/2022/09/20220913130446446.pdf)![ak820pro-flash](./img/ak820pro-flash.jpg)
 
 * LCD Module - 0.85" 128x128 [NFP085B-10AF](https://cdn.hackaday.io/files/1881838051221472/GC9107%20DataSheet%20V1.2.pdf)
 
