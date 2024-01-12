@@ -1,6 +1,6 @@
-# AJAZZ AK820 Pro reverse engineering
+# AJAZZ AK820PRO reverse engineering
 
-This is just a way to document my findings regarding the board of my AJAZZ AK820 Pro (BT/USB/2.4G 81 keys)
+This is just a way to document my findings regarding the board of my AJAZZ AK820PRO (BT/USB/2.4G 81 keys)
 
 ## TODO List - Perhaps some kind souls will add QMK support for it
 - [ ] map lcd module connections
