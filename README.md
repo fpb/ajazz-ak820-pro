@@ -68,6 +68,11 @@ Col RGB pin is connected to PNP transistor (E) - VDD, (B) - GPIO, (C) - LED +
 ## MCU Pinout - SN32F248BF
 ![MCU-Pins](./img/MCU_SN32F299-pinout.png)
 
-## Bluetooth module
+## Bluetooth module Pinout
 ![Bluetooth-Pins](./img/wch-ch582f-pinout.png)
+
+## Flash Pinout
+![Flash-Pins](./img/py25q128ha-pinout.png)
+
+
 
