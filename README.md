@@ -51,6 +51,9 @@ This is just a way to document my findings regarding the board of my AJAZZ AK820
 | R4  |  09  |  10  |  11  |  42 | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | R5  |  12  |  13  |  14  |  43 | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 
+Row RGB pins are connected to NPN transistors (C) - LED, (B) - GPIO, (E) - GND.
+Col RGB pin is connected to PNP transistor (E) - VDD, (B) - GPIO, (C) - LED + 
+
 ### MCU-Diagram - mac/win and bt/off/cable dip switches
 
 - Bluetooth Mode: pin 36 (active high)
@@ -58,13 +61,13 @@ This is just a way to document my findings regarding the board of my AJAZZ AK820
 - Win - Android / Mac - iOS Mode: ????
 
 ### MCU-Diagram - Status LED indicators
-- Caps Lock: pin ??
-- Num Lock: pin ??
+- Caps Lock (White LED): pin ??
+- Num Lock (White LED): pin ??
+- Charging (RGB LED): Charging (RED): ??, Charged (Green): ??
 
 ## MCU Pinout - SN32F248BF
 ![MCU-Pins](./img/MCU_SN32F299-pinout.png)
 
 ## Bluetooth module
-![k4-bluetooth-CYW20730.png](./img/K4-bt-CYW20730.png)
+![Bluetooth-Pins](./img/wch-ch582f-pinout.png)
 
-seems to be wired like the Blitzwolf BW-KB1(https://github.com/IslamAlam/blitzwolf-bw-kb-1)
