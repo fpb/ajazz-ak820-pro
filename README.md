@@ -65,7 +65,7 @@ Col RGB pin is connected to PNP transistor (E) - VDD, (B) - GPIO, (C) - LED +
 - Num Lock (White LED): pin ??
 - Charging (RGB LED): Charging (RED): ??, Charged (Green): ??
 
-## MCU Pinout - SN32F248BF
+## MCU Pinout - SN32F299
 ![MCU-Pins](./img/MCU_SN32F299-pinout.png)
 
 ## Bluetooth module Pinout
