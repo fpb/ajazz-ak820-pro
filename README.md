@@ -107,12 +107,12 @@ Near the BT module there are 10 pads (2x5) + 2 isolated round pads as seen below
 
 | MCU        | LCD Connector    |
 |------------|------------------|
-| 70 MISO0 0 |   1              |
+| 70 MISO0 0 |   1              | SCL0?
 | 79 VSS     |   2 GND          |
 | ??         |   3              |
 | ??         |   4              |
-| 52 MOSI0   |   5              |
-| 50 SCK0    |   6 CLK          |
+| 52 MOSI0   |   5              | P3.2
+| 50 SCK0    |   6 CLK          | P3.0
 | 57 VDDIO1  |   7              |
 | 59 SEL0    |   8              |
 
