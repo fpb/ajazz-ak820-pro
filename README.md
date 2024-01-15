@@ -58,12 +58,15 @@ Col RGB pin is connected to PNP transistor (E) - VDD, (B) - GPIO, (C) - LED +
 
 - Bluetooth Mode: pin 36 (active high)
 - 2.4 Ghz Mode: pin 37 (active high)
-- Win - Android / Mac - iOS Mode: ????
+- Win - Android / Mac - iOS Mode: pin 70 (0-Win, 1-Mac)
 
 ### MCU-Diagram - Status LED indicators
-- Caps Lock (White LED): pin ??
-- Num Lock (White LED): pin ??
-- Charging (RGB LED): Charging (RED): ??, Charged (Green): ??
+- Caps Lock (White LED): pin 71/72/73
+- Num Lock (White LED): pin 71/72/73
+- Charging (RED LED): Charging (RED): ON, Charged:OFF
+
+positive side of CAPS/WIN/CHARGING indicator goes to 1K resistors. The other side I couldn't trace.
+negative is common for all the 3 indicators and seems to be connected to MCU pins 71?/72/73 (??? This makes no sense to me)
 
 ## MCU Pinout - SN32F299
 ![MCU-Pins](./img/MCU_SN32F299-pinout.png)
@@ -72,13 +75,13 @@ Col RGB pin is connected to PNP transistor (E) - VDD, (B) - GPIO, (C) - LED +
 ![Bluetooth-Pins](./img/wch-ch582f-pinout.png)
 
 ### MCU-BT Module wiring
-| MCU |  BT |
-|-----|-----|
-|  61 |  3  |
-|  60 |  4  |
-|  ?? |  27 |
-|  ?? |  28 |
-|  ?? |  10 |
+| MCU      |  BT                 |
+|----------|---------------------|
+|  61 SCL0 |  10 - SCL           |
+|  60 SDA0 |  11 - SDA           |
+|  ------- |  6 - RXD1           |
+|  ------- |  7 - TXD1           |
+|  ------- |  17- PB22/TMR3/RXD2 |
 
 ## Flash Pinout
 ![Flash-Pins](./img/py25q128ha-pinout.png)
