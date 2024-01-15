@@ -105,6 +105,8 @@ Near the BT module there are 10 pads (2x5) + 2 isolated round pads as seen below
 
 ## LCD Module pinout
 
+Found several reverences to 8 pin connectors of these boards with the following pin labels: VCC, GND, DIN (Serial data in), CLK (Serial clk in), ~CS(Chip select), DC (Data/~Command selection), RST (~Reset) and BL (Backlight). No way to read data from the LCD.
+
 | MCU        | LCD Connector    |
 |------------|------------------|
 | 70 MISO0 0 |   1              | SCL0?
