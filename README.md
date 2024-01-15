@@ -83,19 +83,38 @@ negative is common for all the 3 indicators and seems to be connected to MCU pin
 |  ------- |  7 - TXD1           |
 |  ------- |  17- PB22/TMR3/RXD2 |
 
+Near the BT module there are 10 pads (2x5) + 2 isolated round pads as seen below...
+
+----- Insert picture here ------
+
 ## Flash Pinout
 ![Flash-Pins](./img/py25q128ha-pinout.png)
 
-| MCU | Flash |
-|-----|-------|
-|  48 |   1   |
-|  62 |   2   |
-|  71 |   3   |
-|     |   4   |
-|  63 |   5   |
-|  49 |   6   |
-|  57 |   7   |
-|     |   8   |
+### MCU-Flash Module wiring
+
+| MCU        | Flash            |
+|------------|------------------|
+|  48 SEL1   |   1 CS#          |
+|  62 MISO1  |   2 SO           |
+|  71 P1.2   |   3 WP#          |
+|            |   4 GND          |
+|  63 MOSI1  |   5 SI           |
+|  49 SCK1   |   6 SCLK         |
+|  57 VDDIO1 |   7 HOLD#RESET#  |
+|            |   8 VCC          |
+
+## LCD Module pinout
+
+| MCU        | LCD Connector    |
+|------------|------------------|
+| 70 MISO0 0 |   1              |
+| 79 VSS     |   2 GND          |
+| ??         |   3              |
+| ??         |   4              |
+| 52 MOSI0   |   5              |
+| 50 SCK0    |   6 CLK          |
+| 57 VDDIO1  |   7              |
+| 59 SEL0    |   8              |
 
 ## Bootloader mode
 There are two pins under the SPACE bar. They are covered by 2 insulation layers and 1 removable foam strip (there are two strips on each side of the space switch that are easily removable). Cutting a window on the 2 insulation layers will give access to the pins. Shorting them while connecting the USB cable will make the MCU enter bootloader mode. In this mode the USB VID/PID will be 0x0C45/0x7140.
