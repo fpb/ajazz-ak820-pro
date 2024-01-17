@@ -105,7 +105,21 @@ Near the BT module there are 10 pads (2x5) + 2 isolated round pads as seen below
 
 ## LCD Module pinout
 
-Found several reverences to 8 pin connectors of these boards with the following pin labels: VCC, GND, DIN (Serial data in), CLK (Serial clk in), ~CS(Chip select), DC (Data/~Command selection), RST (~Reset) and BL (Backlight). No way to read data from the LCD.
+Found several reverences to 8 pin connectors of these boards with the following pin labels: VCC, GND, DIN (Serial data in), CLK (Serial clk in), ~CS(Chip select), DC (Data/~Command selection), RST (~Reset) and BL (Backlight). No way to read data from the LCD?
+
+Possible LCD connector pinout (from similar devices found on Aliexpress with 8 pins):
+
+| LCD pin# | Description        |
+|----------|--------------------|
+|     1    | LED Anode          |
+|     2    | Power GND          |
+|     3    | RESET (active low) |
+|     4    | Data/Command       |
+|     5    | SDA                |
+|     6    | SCL                |
+|     7    | VDD                |
+|     8    | CS (active low)    |
+
 
 | MCU        | LCD Connector    |
 |------------|------------------|
