@@ -8,7 +8,7 @@ This is just a way to document my findings regarding the board of my AJAZZ AK820
 - [ ] Mac/Win switch wiring
 
 ## Chips
-* Main MCU - HFD80CP100 - appears to be based on/clone of [SONIX SN32F99](https://www.sonix.com.tw/article-jp-4797-39755)
+* Main MCU - HFD80CP100 - appears to be based on/clone of [SONIX SN32F299](https://www.sonix.com.tw/article-jp-4797-43927)
 ![mcu-hfd](./img/mcu-hfd80cp100.jpg)
 
 * Bt module [WCH CH582F](https://www.wch-ic.com/products/CH583.html?)
