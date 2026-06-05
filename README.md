@@ -4,7 +4,7 @@ This is just a way to document my findings regarding the board of my AJAZZ AK820
 
 # QMK Support Status
 
-Cuurent QMK status support:
+Cuurent QMK status support (https://github.com/fpb/qmk_firmware/tree/ak820pro)
 
 - Boots up, keys work (both mac and win layouts).
 - No LED indicators
