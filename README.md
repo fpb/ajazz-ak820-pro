@@ -41,15 +41,15 @@ Cuurent QMK status support (https://github.com/fpb/qmk_firmware/tree/ak820pro)
 
 ### MCU-Diagram - Keyboard matrix diagram on the MCU ✅
 
-| --- | col | C0 | C1 | C2 | C3 | C4 | C5 | C6 | C7 | C8 | C9 | C10 | C11 | C12 | C13 | C14 |
-| --- | --- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | --- | --- | --- | --- | --- |
-| row | pin | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25  | 26  | 27  | 29  | 30  |
-| R0  | 38  |    |    |    |    |    |    |    |    |    |    |     |     |     |     |     |
-| R1  | 39  |    |    |    |    |    |    |    |    |    |    |     |     |     |     |     |
-| R2  | 40  |    |    |    |    |    |    |    |    |    |    |     |     |     |     |     |
-| R3  | 41  |    |    |    |    |    |    |    |    |    |    |     |     |     |     |     |
-| R4  | 42  |    |    |    |    |    |    |    |    |    |    |     |     |     |     |     |
-| R5  | 43  |    |    |    |    |    |    |    |    |    |    |     |     |     |     |     |
+| --- | col       | C0 | C1 | C2 | C3 | C4 | C5 | C6 | C7 | C8 | C9 | C10 | C11 | C12 | C13 | C14 |
+| --- | --------- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | --- | --- | --- | --- | --- |
+| row | pin       | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25  | 26  | 27  | 29  | 30  |
+| R0  | 38/P1.14  |    |    |    |    |    |    |    |    |    |    |     |     |     |     |     |
+| R1  | 39/P1.15  |    |    |    |    |    |    |    |    |    |    |     |     |     |     |     |
+| R2  | 40/P1.19  |    |    |    |    |    |    |    |    |    |    |     |     |     |     |     |
+| R3  | 41/P3.19  |    |    |    |    |    |    |    |    |    |    |     |     |     |     |     |
+| R4  | 42/P0.19  |    |    |    |    |    |    |    |    |    |    |     |     |     |     |     |
+| R5  | 43/P0.18  |    |    |    |    |    |    |    |    |    |    |     |     |     |     |     |
 
 ### MCU-Diagram - LED matrix
 
@@ -87,37 +87,32 @@ negative is common for all the 3 indicators and seems to be connected to MCU pin
 ![Bluetooth-Pins](./img/wch-ch582f-pinout.png)
 
 ### MCU-BT Module wiring
-| MCU      |  BT                 |
-|----------|---------------------|
-|  61 SCL0 |  10 - SCL           |
-|  60 SDA0 |  11 - SDA           |
-|  ------- |  6 - RXD1           |
-|  ------- |  7 - TXD1           |
-|  ------- |  17- PB22/TMR3/RXD2 |
+| MCU             |  BT                                |    Notes     |
+|-----------------|------------------------------------|--------------|
+|  61 URXD2/URXD3 |  10 - PB13/U2D+/SCK0_/SCL/TXD1_    |  P1.6 (B6)   |
+|  60 UTXD2/UTXD3 |  11 - PB12/U2D-/SCK0_/SDA/RXD1_    |  P1.7 (B7)   |
+|  -------        |  6 - PA8/RXD1/AIN12                |              |
+|  -------        |  7 - PA9/TMR0/TXD1/AIN13           |              |
+|  -------        |  17- PB22/TMR3/RXD2_               |              |
 
 Near the BT module there are 10 pads (2x5) + 2 isolated rectangular pads. When looking at the CH582F chip upside down, the pins on the left are connected to the BT module like this (top to bottom):
 
-1 - WCH Pin#10 - SCL
-2 - WCH Pin#11 - SDA
-3 - WCH Pin#6  - RXD1
-4 - WCH Pin#7  - TXD1
-5 - WCH Pin#17 - PB22/TMR3/RXD2
 
 ## Flash Pinout
 ![Flash-Pins](./img/py25q128ha-pinout.png)
 
 ### MCU-Flash Module wiring
 
-| MCU        | Flash            |
-|------------|------------------|
-|  48 SEL1   |   1 CS#          |
-|  62 MISO1  |   2 SO           |
-|  71 P1.2   |   3 WP#          |
-|            |   4 GND          |
-|  63 MOSI1  |   5 SI           |
-|  49 SCK1   |   6 SCLK         |
-|  57 VDDIO1 |   7 HOLD#RESET#  |
-|            |   8 VCC          |
+| MCU        | Flash            | Notes.     |
+|------------|------------------|------------|
+|  48 SEL1   |   1 CS#          |P0.13 (A13) |
+|  62 MISO1  |   2 SO           |P1.10 (B10) |
+|  71 MOSI0   |   3 WP#         | P1.2 (B2)  |
+|            |   4 GND          |            |
+|  63 MOSI1  |   5 SI           | P1.11 (B11)|
+|  49 SCK1   |   6 SCLK         | P0.12 (A12)|
+|  57 VDDIO1 |   7 HOLD#RESET#  |            |
+|            |   8 VCC          |            |
 
 ## LCD Module pinout
 
@@ -138,16 +133,16 @@ Possible LCD connector pinout (from similar devices found on Aliexpress with 8 p
 
 Discovered connections between LCD connector and MCU:
 
-| MCU                             | LCD Connector    |
-|---------------------------------|------------------|
-| 70 P1.1 (Mac/Win switch) -X-    |   1 LED Anode    |
-| 79 VSS                          |   2 GND          |
-| ??                              |   3              |
-| ??                              |   4              |
-| 52 P3.2 / MOSI0 (SPI0 data out) |   5 SDA          |
-| 50 [P3.0 / SCK0 (SPI0 clock)]   |   6 CLK          | 
-| 57 VDDIO1                       |   7 VDD          |
-| 59 P1.8                         |   8 ~CS          |
+| MCU                             | LCD Connector    |    Notes         |
+|---------------------------------|------------------|------------------|
+| 70 P1.1 (Mac/Win switch) -X-!   |   1 LED Anode    |      P0.16 ?     |
+| 79 VSS                          |   2 GND          |                  |
+| ??                              |   3 ~RESET       |      P0.17 ?     |
+| ??                              |   4 D/C          |      P3.14 ?     |
+| 52 MOSI0 (SPI0 data out)        |   5 SDA          |     P3.2 (D2)    |
+| 50 SCK0 (SPI0 clock)            |   6 CLK          |     P3.0 (D0)    |
+| 57 VDDIO1                       |   7 VDD          |                  |
+| 59 SEL0                         |   8 ~CS          |     P1.8 (B8)    |
 
 ## Bootloader mode
 There are two pins under the SPACE bar. They are covered by 2 insulation layers and 1 removable foam strip (there are two strips on each side of the space switch that are easily removable). Cutting a window on the 2 insulation layers will give access to the pins. Shorting them while connecting the USB cable will make the MCU enter bootloader mode. In this mode the USB VID/PID will be 0x0C45/0x7140.
