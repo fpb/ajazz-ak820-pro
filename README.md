@@ -73,7 +73,7 @@ Col RGB pin is connected to PNP transistor (E) - VDD, (B) - GPIO, (C) - LED +
 - Win - Android / Mac - iOS Mode: pin 70 (0-Win, 1-Mac)
 
 ### MCU-Diagram - Status LED indicators
-- Caps Lock (White LED): pin 71/72/73
+- Caps Lock (White LED): 65? P3.15?
 - Num Lock (White LED): pin 71/72/73
 - Charging (RED LED): Charging (RED): ON, Charged:OFF
 
