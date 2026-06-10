@@ -1,26 +1,28 @@
 # AJAZZ AK820PRO reverse engineering
 
-This is just a way to document my findings regarding the board of my AJAZZ AK820PRO (BT/USB/2.4G 81 keys)
+This is just a way to document my findings regarding the board of AJAZZ AK820PRO (BT/USB/2.4G 81 keys)
 
 # QMK Support Status
 
 Cuurent QMK status support (https://github.com/fpb/qmk_firmware/tree/ak820pro)
 
 - Boots up, keys work (both mac and win layouts).
-- No LED indicators
+- No LED indicators(CAPS lock works with a hack (needs some investigation)
 - No RGB (not even backlight)
-- No Volume Knob (pressing it works as it is just like another key)
+- No Volume Knob (pressing it works, as it is just like another key)
 - No Wireless support (BT/2.4G)
 - No LCD screen
 
+At the moment support is unstable as soon as I try to add any of the missing features...
+
 ## TODO List
 
-- [ ] map lcd module connections (2 missing signals)
-- [ ] map status indicators' leds (Caps lock, Win lock, Charging)
-- [ ] map rotary encoder connections
+- [ ] support LCD module
+- [ ] adequatly support LED indicators (CAPS lock, WIN lock? and Charging)
+- [ ] support rotary encoder
 
 ## Chips
-* Main MCU - HFD80CP100 - appears to be based on/clone of [SONIX SN32F299](https://www.sonix.com.tw/webapi/fl219869/SN32F299_V1.8_EN.pdf)
+* Main MCU - HFD80CP100 - based on/clone of [SONIX SN32F299](https://www.sonix.com.tw/webapi/fl219869/SN32F299_V1.8_EN.pdf)
 ![mcu-hfd](./img/mcu-hfd80cp100.jpg)
 
 * Bt module [WCH CH582F](https://www.wch-ic.com/products/CH583.html?)
@@ -31,6 +33,18 @@ Cuurent QMK status support (https://github.com/fpb/qmk_firmware/tree/ak820pro)
 * LCD Module - 0.85" 128x128 [NFP085B-10AF](https://cdn.hackaday.io/files/1881838051221472/GC9107%20DataSheet%20V1.2.pdf)
 
 ## Wiring
+
+## Encoder
+
+| Pin | MCU      |
+|-----|----------|
+| SW1 | 30/P2.9  |
+| SW2 | 38/P1.14 |
+| A   | 71/P1.2  |
+| C   | GND      |
+| B   | 72/P0.10 |
+
+Switch is part of the key matrix
 
 ### Key Matrix & MCU
 [Keyboard Layout](https://www.keyboard-layout-editor.com/##@_name=AJAZZ%20AK820%20PRO&author=Fernando%20Birra&switchMount=cherry&plate:true%3B&@_c=%2393acb8&t=%23ffffff&a:6%3B&=Esc&_x:0.25&c=%23cccccc&t=%239989b3%3B&=F1&=F2&=F3&=F4&_x:0.25&c=%239989b3&t=%23cccccc%3B&=F5&=F6&=F7&=F8&_x:0.25&c=%23cccccc&t=%239989b3%3B&=F9&=F10&=F11&=F12&_x:0.25&c=%239989b3&t=%23cccccc%3B&=Delete&_x:0.5%3B&=Knob%3B&@_y:0.25&x:1&c=%23cccccc&t=%239989b3&a:4&fa@:4&:4%3B%3B&=!%0A1&=%2F@%0A2&=%23%0A3&=$%0A4&=%25%0A5&=%5E%0A6&=%2F&%0A7&=*%0A8&=(%0A9&=)%0A0&=%2F_%0A-&=+%0A%2F=&_c=%239989b3&t=%23cccccc&a:6&w:2%3B&=%3C-%20Backspace&_x:0.5%3B&=Home%3B&@_y:-0.75&c=%23cccccc&t=%239989b3&a:4%3B&=~%0A%60%3B&@_y:-0.75&x:15&t=%23ffffff%0A%23000000&a:5&fa@:4&:1%3B&w:0.5&h:0.75&d:true%3B&=%3Ci%20class%2F='fa%20fa-circle'%3E%3C%2F%2Fi%3E%0AC%3B&@_y:-0.5&c=%239989b3&t=%23cccccc&a:4&fa@:4&=undefined&:0&:0&:0&:0&=undefined%3B&w:1.5%3B&=%3C-%0A-%3E%0A%0A%0A%0A%0ATab&_c=%23cccccc&t=%239989b3&fa@:6%3B%3B&=Q&=W&=E&=R&=T&=Y&=U&=I&=O&=P&_fa@:4&:4%3B%3B&=%7B%0A%5B&=%7D%0A%5D&_w:1.5%3B&=%7C%0A%5C&_x:0.5&c=%239989b3&t=%23cccccc&a:6&f:3%3B&=PgUp%3B&@_y:-0.875&x:15&c=%23cccccc&t=%23ffffff%0A%23000000&a:5&f2:1&w:0.5&h:0.75&d:true%3B&=%3Ci%20class%2F='fa%20fa-circle'%3E%3C%2F%2Fi%3E%0AW%3B&@_y:-0.375&x:15&t=%23ff0000%0A%23000000&w:0.5&h:0.75&d:true%3B&=%3Ci%20class%2F='fa%20fa-circle'%3E%3C%2F%2Fi%3E%0ABAT%3B&@_y:-0.75&c=%239989b3&t=%23cccccc&a:6&w:1.75%3B&=Caps%20Lock&_c=%23cccccc&t=%239989b3&a:4&fa@:6%3B%3B&=A&=S&=D&_n:true%3B&=F&=G&=H&_n:true%3B&=J&=K&=L&_fa@:4&:4%3B%3B&=%2F:%0A%2F%3B&=%22%0A'&_c=%2393acb8&t=%23cccccc&a:6&f:3&w:2.25%3B&=Enter&_x:0.5&c=%239989b3&f:3%3B&=PgDn%3B&@_f:3&w:2.25%3B&=Shift&_c=%23cccccc&t=%239989b3&a:4&fa@:6%3B%3B&=Z&=X&=C&=V&=B&=N&=M&_fa@:4&:4%3B%3B&=%3C%0A,&=%3E%0A.&=%3F%0A%2F%2F&_c=%239989b3&t=%23cccccc&a:6&f:3&w:1.75%3B&=Shift%3B&@_y:-0.75&x:14.25&a:4&fa@:9%3B%3B&=↑%3B&@_y:-0.25&a:6&f:3&w:1.25%3B&=Ctrl&_f:3&w:1.25%3B&=Win&_f:3&w:1.25%3B&=Alt&_c=%2393acb8&a:7&w:6.25%3B&=&_c=%239989b3&a:6&f:3%3B&=Alt&_f:3%3B&=Fn&_f:3%3B&=Ctrl%3B&@_y:-0.75&x:13.25&a:4&f:3%3B&=←&_f:3%3B&=↓&_f:3%3B&=→)
@@ -51,7 +65,8 @@ Cuurent QMK status support (https://github.com/fpb/qmk_firmware/tree/ak820pro)
 | R4  | 42/P0.19  |    |    |    |    |    |    |    |    |    |    |     |     |     |     |     |
 | R5  | 43/P0.18  |    |    |    |    |    |    |    |    |    |    |     |     |     |     |     |
 
-### MCU-Diagram - LED matrix
+### MCU-Diagram - LED matrix 
+(connections not tested in firmware yet)
 
 | --- |   r  |   b  |   g  | col | C0 | C1 | C2 | C3 | C4 | C5 | C6 | C7 | C8 | C9 | C10 | C11 | C12 | C13 | C14 | C15 | C16 | C17 | C18 |
 | --- |  --- |  --- |  --- | --- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | --  | --  | --  | --  | --  | --  | --  | --  | --  |
@@ -68,17 +83,21 @@ Col RGB pin is connected to PNP transistor (E) - VDD, (B) - GPIO, (C) - LED +
 
 ### MCU-Diagram - mac/win and bt/off/cable dip switches
 
-- Bluetooth Mode: pin 36 (active high)
-- 2.4 Ghz Mode: pin 37 (active high)
-- Win - Android / Mac - iOS Mode: pin 70 (0-Win, 1-Mac)
+- Bluetooth Mode: pin 36/P1.12 (active high)
+- 2.4 Ghz Mode: pin 37/P1.13 (active high)
+- Win - Android / Mac - iOS Mode: pin 70/P1.1 (0-Win, 1-Mac)
 
 ### MCU-Diagram - Status LED indicators
-- Caps Lock (White LED): 65? P3.15?
-- Num Lock (White LED): pin 71/72/73
-- Charging (RED LED): Charging (RED): ON, Charged:OFF
 
-positive side of CAPS/WIN/CHARGING indicator goes to 1K resistors. The other side I couldn't trace.
-negative is common for all the 3 indicators and seems to be connected to MCU pins 71?/72/73 (??? This makes no sense to me)
+Connections to indicator LEDs is as follows:
+
+MCU PIN --> 1K Resistor --> -(+)LED(-)-- GND
+
+| MCU PIN  | Indicator |
+|----------|-----------|
+| 65/P3.15 | CAPS LOCK |
+| 28/P2.15 | WIN LOCK  |
+| 68/P1.18 | Charging  |
 
 ## MCU Pinout - SN32F299
 ![MCU-Pins](./img/MCU_SN32F299-pinout.png)
@@ -116,7 +135,7 @@ Near the BT module there are 10 pads (2x5) + 2 isolated rectangular pads. When l
 
 ## LCD Module pinout
 
-Found several reverences to 8 pin connectors of these boards with the following pin labels: VCC, GND, DIN (Serial data in), CLK (Serial clk in), ~CS(Chip select), DC (Data/~Command selection), RST (~Reset) and BL (Backlight). No way to read data from the LCD?
+Found several reverences to 8 pin connectors of these boards with the following pin labels: VCC, GND, DIN (Serial data in), CLK (Serial clk in), ~CS(Chip select), DC (Data/~Command selection), RST (~Reset) and BL (Backlight). 
 
 Possible LCD connector pinout (from similar devices found on Aliexpress with 8 pins):
 
@@ -133,16 +152,16 @@ Possible LCD connector pinout (from similar devices found on Aliexpress with 8 p
 
 Discovered connections between LCD connector and MCU:
 
-| MCU                             | LCD Connector    |    Notes         |
-|---------------------------------|------------------|------------------|
-| 70 P1.1 (Mac/Win switch) -X-!   |   1 LED Anode    |      P0.16 ?     |
-| 79 VSS                          |   2 GND          |                  |
-| ??                              |   3 ~RESET       |      P0.17 ?     |
-| ??                              |   4 D/C          |      P3.14 ?     |
-| 52 MOSI0 (SPI0 data out)        |   5 SDA          |     P3.2 (D2)    |
-| 50 SCK0 (SPI0 clock)            |   6 CLK          |     P3.0 (D0)    |
-| 57 VDDIO1                       |   7 VDD          |                  |
-| 59 SEL0                         |   8 ~CS          |     P1.8 (B8)    |
+| MCU                             | LCD Connector    |    Notes                    |
+|---------------------------------|------------------|-----------------------------|
+| 45/P0.16 (100 Ohm Resistor)     |   1 LED Anode    | 100 Ohm Resistor            |
+| 79/VSS                          |   2 GND          |                             |
+| 44/P0.17                        |   3 ~RESET       | Schottky Diode + 10K Pullup |
+| 64/P3.14                        |   4 D/C          | Schottky Diode + 10K Pullup |
+| 52/MOSI0/P3.2                   |   5 SDA          |                             |
+| 50/SCK0/P3.0                    |   6 CLK          |                             |
+| 57/VDDIO1                       |   7 VDD          |                             |
+| 59/SEL0/P1.8                    |   8 ~CS          |     P1.8 (B8)               |
 
 ## Bootloader mode
 There are two pins under the SPACE bar. They are covered by 2 insulation layers and 1 removable foam strip (there are two strips on each side of the space switch that are easily removable). Cutting a window on the 2 insulation layers will give access to the pins. Shorting them while connecting the USB cable will make the MCU enter bootloader mode. In this mode the USB VID/PID will be 0x0C45/0x7140.
