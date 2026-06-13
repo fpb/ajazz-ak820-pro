@@ -114,6 +114,11 @@ MCU PIN --> 1K Resistor --> -(+)LED(-)-- GND
 
 Near the BT module there are 10 pads (2x5) + 2 isolated rectangular pads. When looking at the CH582F chip upside down, the pins on the left are connected to the BT module like this (top to bottom):
 
+1 - WCH Pin#10 - SCL
+2 - WCH Pin#11 - SDA
+3 - WCH Pin#6  - RXD1
+4 - WCH Pin#7  - TXD1
+5 - WCH Pin#17 - PB22/TMR3/RXD2
 
 ## Flash Pinout
 ![Flash-Pins](./img/py25q128ha-pinout.png)
