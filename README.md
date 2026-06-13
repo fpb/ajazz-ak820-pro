@@ -7,19 +7,17 @@ This is just a way to document my findings regarding the board of AJAZZ AK820PRO
 Cuurent QMK status support (https://github.com/fpb/qmk_firmware/tree/ak820pro)
 
 - Boots up, keys work (both mac and win layouts).
-- No LED indicators(CAPS lock works with a hack (needs some investigation)
+- CAPS lock is working (natively), the other two LEDs are being controlled manually.
 - No RGB (not even backlight)
-- No Volume Knob (pressing it works, as it is just like another key)
+- Volume Knob is working
 - No Wireless support (BT/2.4G)
-- No LCD screen
+- LCD screen support is partial/unstable.
 
 At the moment support is unstable as soon as I try to add any of the missing features...
 
 ## TODO List
 
 - [ ] support LCD module
-- [ ] adequatly support LED indicators (CAPS lock, WIN lock? and Charging)
-- [ ] support rotary encoder
 
 ## Chips
 * Main MCU - HFD80CP100 - based on/clone of [SONIX SN32F299](https://www.sonix.com.tw/webapi/fl219869/SN32F299_V1.8_EN.pdf)
@@ -108,7 +106,7 @@ MCU PIN --> 1K Resistor --> -(+)LED(-)-- GND
 ### MCU-BT Module wiring
 | MCU             |  BT                                |    Notes     |
 |-----------------|------------------------------------|--------------|
-|  61 URXD2/URXD3 |  10 - PB13/U2D+/SCK0_/SCL/TXD1_    |  P1.6 (B6)   |
+|  61 URXD2/URXD3 |  10 - PB13/U2D+/SCK0_/SCL/TXD1_    |  P1.6 (B6)   |18,B12
 |  60 UTXD2/UTXD3 |  11 - PB12/U2D-/SCK0_/SDA/RXD1_    |  P1.7 (B7)   |
 |  -------        |  6 - PA8/RXD1/AIN12                |              |
 |  -------        |  7 - PA9/TMR0/TXD1/AIN13           |              |
