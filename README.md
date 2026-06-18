@@ -6,18 +6,13 @@ This is just a way to document my findings regarding the board of AJAZZ AK820PRO
 
 Cuurent QMK status support (https://github.com/fpb/qmk_firmware/tree/ak820pro)
 
-- Boots up, keys work (both mac and win layouts).
-- All LED indicators work.
-- LCD screen works.
-- Volume Knob works
-- No Wireless support (BT/2.4G)
-- No RGB (not even backlight)
-
-## TODO List
-
-- [ ] Add a propoer dashboard for the LCD
-- [ ] Start working on Bluetooth support
-- [ ] Start working on RGB lighting support
+- [x] key matrix
+- [x] LED indicators
+- [x] LCD display
+- [x] Dip switches
+- [x] Volume Knob
+- [ ] Wireless support (BT/2.4G)
+- [ ] RGB leds
 
 ## Chips
 * Main MCU - HFD80CP100 - based on/clone of [SONIX SN32F299](https://www.sonix.com.tw/webapi/fl219869/SN32F299_V1.8_EN.pdf)
