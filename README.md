@@ -4,7 +4,7 @@ This is just a way to document my findings regarding the board of AJAZZ AK820PRO
 
 # QMK Support Status
 
-Cuurent QMK status support (https://github.com/fpb/qmk_firmware/tree/ak820pro)
+Cuurent QMK status support (https://github.com/fpb/qmk_firmware/tree/lcd_no_suspend)
 
 - [x] key matrix
 - [x] LED indicators
