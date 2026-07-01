@@ -4,14 +4,15 @@ This is just a way to document my findings regarding the board of AJAZZ AK820PRO
 
 # QMK Support Status
 
-Cuurent QMK status support (https://github.com/fpb/qmk_firmware/tree/lcd_no_suspend)
+Current QMK status support (https://github.com/fpb/qmk_firmware/tree/lcd_bluetooth_hid)
 
 - [x] key matrix
 - [x] LED indicators
 - [x] LCD display
 - [x] Dip switches
 - [x] Volume Knob
-- [ ] Wireless support (BT/2.4G)
+- [x] Wireless support (BT/2.4G)
+- [X] Clock support
 - [ ] RGB leds
 
 ## Chips
@@ -25,7 +26,19 @@ Cuurent QMK status support (https://github.com/fpb/qmk_firmware/tree/lcd_no_susp
 
 * LCD Module - 0.85" 128x128 [NFP085B-10AF](https://cdn.hackaday.io/files/1881838051221472/GC9107%20DataSheet%20V1.2.pdf)
 
+* RTC clock: CHMC D8563F (clone of PCF8563)
+(thanks to https://hwbusters.com/peripherals/epomaker-th80-v2-pro-mechanical-keyboard-review/4/ for tracking the RTC chip)
+
 ## Wiring
+
+## RTC clock
+
+Needs I2C bit bang because pins used are not I2C hardware compatible on MCU. Fortunately, one reads the clock at boot and keep it updated internally. Only other time that we need to talk to the RTC chip is to set the date via HID utility.
+
+|RTC |  MCU  |
+|----|-------|
+|SDA | P0.15 |
+|SCL | P0.14 |
 
 ## Encoder
 
@@ -61,15 +74,15 @@ Switch is part of the key matrix
 ### MCU-Diagram - LED matrix 
 (connections not tested in firmware yet)
 
-| --- |   r  |   b  |   g  | col | C0 | C1 | C2 | C3 | C4 | C5 | C6 | C7 | C8 | C9 | C10 | C11 | C12 | C13 | C14 | C15 | C16 | C17 | C18 |
-| --- |  --- |  --- |  --- | --- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | --  | --  | --  | --  | --  | --  | --  | --  | --  |
-| row |  pin |  pin |  pin | pin | 25 | 26 | 27 | 28 | 29 | 30 | 31 | 32 | 34 | 35 | 36  | 37  | 38  | 39  | 40  | 41  | 42  | 43  | 44  |
-| R0  |  73  |  75  |  76  |  38 | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| R1  |  77  |  78  |  01  |  39 | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| R2  |  02  |  03  |  04  |  40 | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| R3  |  05  |  06  |  08  |  41 | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| R4  |  09  |  10  |  11  |  42 | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| R5  |  12  |  13  |  14  |  43 | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| --- |   r  |   b  |   g  | col | C0 | C1 | C2 | C3 | C4 | C5 | C6 | C7 | C8 | C9 | C10 | C11 | C12 | C13 | C14 |
+| --- |  --- |  --- |  --- | --- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | --  | --  | --  | --  | --  |
+| row |  pin |  pin |  pin | pin | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25  | 26  | 27  | 29  | 30  |
+| R0  |  73  |  75  |  76  |  38 | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | --- | --- | --- | --- | --- |
+| R1  |  77  |  78  |  01  |  39 | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | --- | --- | --- | --- | --- |
+| R2  |  02  |  03  |  04  |  40 | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | --- | --- | --- | --- | --- |
+| R3  |  05  |  06  |  08  |  41 | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | --- | --- | --- | --- | --- |
+| R4  |  09  |  10  |  11  |  42 | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | --- | --- | --- | --- | --- |
+| R5  |  12  |  13  |  14  |  43 | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | --- | --- | --- | --- | --- |
 
 Row RGB pins are connected to NPN transistors (C) - LED, (B) - GPIO, (E) - GND.
 Col RGB pin is connected to PNP transistor (E) - VDD, (B) - GPIO, (C) - LED + 
