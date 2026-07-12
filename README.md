@@ -1,10 +1,10 @@
 # AJAZZ AK820PRO reverse engineering
 
-This is just a way to document my findings regarding the board of AJAZZ AK820PRO (BT/USB/2.4G 81 keys)
+AJAZZ AK820PRO (BT/USB/2.4G 81 keys) Reverse Engineering for QMK port
 
 # QMK Support Status
 
-Current QMK status support (https://github.com/fpb/qmk_firmware/tree/lcd_bluetooth_hid)
+Current QMK status support (https://github.com/fpb/qmk_firmware/tree/ak820pro-full)
 
 - [x] key matrix
 - [x] LED indicators
@@ -13,7 +13,8 @@ Current QMK status support (https://github.com/fpb/qmk_firmware/tree/lcd_bluetoo
 - [x] Volume Knob
 - [x] Wireless support (BT/2.4G)
 - [X] Clock support
-- [ ] RGB leds
+- [x] RGB leds
+- [ ] Flash Memory (for LCD animations)
 
 ## Chips
 * Main MCU - HFD80CP100 - based on/clone of [SONIX SN32F299](https://www.sonix.com.tw/webapi/fl219869/SN32F299_V1.8_EN.pdf)
