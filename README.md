@@ -18,6 +18,10 @@ Current QMK status support (https://github.com/fpb/qmk_firmware/tree/ak820pro-fu
 
 You can use this utility to set the clock: [set-clock](https://github.com/fpb/time-util-ak820pro)
 
+## QMK Firmware
+
+- Look under the [QMKBinaries](https://github.com/fpb/ajazz-ak820-pro/tree/main/QMKFWBinaries) folder
+
 ## Chips
 * Main MCU - HFD80CP100 - based on/clone of [SONIX SN32F299](https://www.sonix.com.tw/webapi/fl219869/SN32F299_V1.8_EN.pdf)
 ![mcu-hfd](./img/mcu-hfd80cp100.jpg)
