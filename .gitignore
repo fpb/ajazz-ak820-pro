@@ -1,0 +1,14 @@
+# Raw flash dumps -- too large for git, and reproducible from the hardware.
+# flash_dump.log is just the hexdump transcript of flash.bin, so it is doubly
+# redundant. Everything derived from them (extracted/, anim_*/, flash_frames/)
+# IS tracked, so the repo stays useful without the 80MB of source bytes.
+flash/flash.bin
+flash/flash_dump.log
+
+# Vendor Windows updaters/tools -- large, redistributable elsewhere, not needed
+# to reproduce anything here.
+*.exe
+
+.DS_Store
+__pycache__/
+*.pyc
