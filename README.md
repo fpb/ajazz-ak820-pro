@@ -7,11 +7,10 @@ AJAZZ AK820PRO (BT/USB/2.4G 81 keys) Reverse Engineering for QMK port
 Everything below is supported. Two firmware branches are worth knowing about:
 
 - [`ak820pro-full`](https://github.com/fpb/qmk_firmware/tree/ak820pro-full) — the
-  full-featured build with the LCD art embedded in the firmware image.
-- [`ak820pro-flashlcd-tiles`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd-tiles) —
-  the flagship: the dashboard runs on pre-rendered RGB565 tiles served from external
-  SPI flash, so the LCD art (and GIF animations) is provisioned to flash from the host
-  instead of baked into firmware. This is the branch that closes out the flash-memory item.
+  full-featured build with the LCD art embedded in the firmware image. It uses Quantum Painter to display.
+- [`ak820pro-flashlcd-tiles`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd-tiles) — the dashboard runs on pre-rendered RGB565 tiles served from external SPI flash, so the LCD art (and GIF animations) is provisioned to flash from the host instead of baked into firmware. Quantum Painter is not used.
+
+HW Support Status:
 
 - [x] key matrix
 - [x] LED indicators
@@ -45,9 +44,37 @@ animations into external flash. It replaces the old `set-clock` utility.
 * RTC clock: CHMC D8563F (clone of PCF8563)
 (thanks to https://hwbusters.com/peripherals/epomaker-th80-v2-pro-mechanical-keyboard-review/4/ for tracking the RTC chip)
 
+## Pinouts
+
+### MCU Pinout - SN32F299
+![MCU-Pins](./img/MCU_SN32F299-pinout.png)
+
+### Bluetooth module Pinout
+![Bluetooth-Pins](./img/wch-ch582f-pinout.png)
+
+### Flash Pinout
+![Flash-Pins](./img/py25q128ha-pinout.png)
+
+### LCD Module pinout
+
+Found several reverences to 8 pin connectors of these boards with the following pin labels: VCC, GND, DIN (Serial data in), CLK (Serial clk in), ~CS(Chip select), DC (Data/~Command selection), RST (~Reset) and BL (Backlight). 
+
+Possible LCD connector pinout (from similar devices found on Aliexpress with 8 pins):
+
+| LCD pin# | Description        |
+|----------|--------------------|
+|     1    | LED Anode          |
+|     2    | Power GND          |
+|     3    | RESET (active low) |
+|     4    | Data/Command       |
+|     5    | SDA                |
+|     6    | SCL                |
+|     7    | VDD                |
+|     8    | CS (active low)    |
+
 ## Wiring
 
-## RTC clock
+### RTC clock
 
 Needs I2C bit bang because pins used are not I2C hardware compatible on MCU. Fortunately, one reads the clock at boot and keep it updated internally. Only other time that we need to talk to the RTC chip is to set the date via HID utility.
 
@@ -56,7 +83,7 @@ Needs I2C bit bang because pins used are not I2C hardware compatible on MCU. For
 |SDA | P0.15 |
 |SCL | P0.14 |
 
-## Encoder
+### Encoder
 
 | Pin | MCU      |
 |-----|----------|
@@ -121,11 +148,6 @@ MCU PIN --> 1K Resistor --> -(+)LED(-)-- GND
 | 28/P2.15 | WIN LOCK  |
 | 68/P1.18 | Charging  |
 
-## MCU Pinout - SN32F299
-![MCU-Pins](./img/MCU_SN32F299-pinout.png)
-
-## Bluetooth module Pinout
-![Bluetooth-Pins](./img/wch-ch582f-pinout.png)
 
 ### MCU-BT Module wiring
 | MCU             |  BT                                |    Notes     |
@@ -144,8 +166,6 @@ Near the BT module there are 10 pads (2x5) + 2 isolated rectangular pads. When l
 4 - WCH Pin#7  - TXD1
 5 - WCH Pin#17 - PB22/TMR3/RXD2
 
-## Flash Pinout
-![Flash-Pins](./img/py25q128ha-pinout.png)
 
 ### MCU-Flash Module wiring
 
@@ -160,22 +180,7 @@ Near the BT module there are 10 pads (2x5) + 2 isolated rectangular pads. When l
 |  57 VDDIO1 |   7 HOLD#RESET#  |            |
 |            |   8 VCC          |            |
 
-## LCD Module pinout
-
-Found several reverences to 8 pin connectors of these boards with the following pin labels: VCC, GND, DIN (Serial data in), CLK (Serial clk in), ~CS(Chip select), DC (Data/~Command selection), RST (~Reset) and BL (Backlight). 
-
-Possible LCD connector pinout (from similar devices found on Aliexpress with 8 pins):
-
-| LCD pin# | Description        |
-|----------|--------------------|
-|     1    | LED Anode          |
-|     2    | Power GND          |
-|     3    | RESET (active low) |
-|     4    | Data/Command       |
-|     5    | SDA                |
-|     6    | SCL                |
-|     7    | VDD                |
-|     8    | CS (active low)    |
+## LCD Module wiring
 
 Discovered connections between LCD connector and MCU:
 
