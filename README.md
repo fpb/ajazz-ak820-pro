@@ -4,19 +4,28 @@ AJAZZ AK820PRO (BT/USB/2.4G 81 keys) Reverse Engineering for QMK port
 
 # QMK Support Status
 
-Current QMK status support (https://github.com/fpb/qmk_firmware/tree/ak820pro-full)
+Everything below is supported. Two firmware branches are worth knowing about:
+
+- [`ak820pro-full`](https://github.com/fpb/qmk_firmware/tree/ak820pro-full) — the
+  full-featured build with the LCD art embedded in the firmware image.
+- [`ak820pro-flashlcd-tiles`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd-tiles) —
+  the flagship: the dashboard runs on pre-rendered RGB565 tiles served from external
+  SPI flash, so the LCD art (and GIF animations) is provisioned to flash from the host
+  instead of baked into firmware. This is the branch that closes out the flash-memory item.
 
 - [x] key matrix
 - [x] LED indicators
 - [x] LCD display
 - [x] Dip switches
 - [x] Volume Knob
-- [x] Wireless support (BT/2.4G)
-- [X] Clock support
-- [x] RGB leds
-- [ ] Flash Memory (for LCD animations)
+- [x] Wireless support (BT/2.4G) — custom CH582F driver with ACK/retry reliability
+- [x] Clock support
+- [x] RGB leds (per-key, hardware PWM across CT16B0/B1/B2)
+- [x] Flash Memory — LCD assets **and** GIF animations, provisioned over HID (`tiles` branch)
 
-You can use this utility to set the clock: [set-clock](https://github.com/fpb/time-util-ak820pro)
+Host toolkit: [**ak820ctl**](https://github.com/fpb/time-util-ak820pro) sets the LCD
+clock and (on the `tiles` branch) builds and flashes the LCD image assets and GIF
+animations into external flash. It replaces the old `set-clock` utility.
 
 ## QMK Firmware
 
