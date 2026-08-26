@@ -8,13 +8,13 @@ Everything below is supported. The two **recommended** firmware branches:
 
 - [`ak820pro-full`](https://github.com/fpb/qmk_firmware/tree/ak820pro-full) — the
   full-featured build with the LCD art embedded in the firmware image. Uses Quantum Painter to display.
-- [`ak820pro-flashlcd-tiles`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd-tiles) — the dashboard runs on pre-rendered RGB565 tiles served from external SPI flash, so the LCD art (and GIF animations) is provisioned to flash from the host instead of baked into firmware. Quantum Painter is not used. This is the flagship.
+- [`ak820pro-flashlcd-unified`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd-unified) — **the preferred flash-LCD build.** The dashboard runs on pre-rendered RGB565 tiles served from external SPI flash (LCD art + GIF animations provisioned from the host instead of baked into firmware), driven entirely through the ChibiOS SN32 SPI driver (with the `spi_fifo_pump` + `spi_flash_dma` patches). Using the standard driver — rather than a bare-metal bus — keeps it maintainable and leaves Quantum Painter available if it is ever wanted again, at a cost of +468 bytes and no measurable speed loss vs the bare-metal equivalent.
 
-The port also has several LCD-driver experiment branches, differing only in **how the panel is driven** (all render the same dashboard):
+The port also has related LCD branches, differing mainly in **how the panel is driven** (all render the same dashboard):
 
+- [`ak820pro-flashlcd-tiles`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd-tiles) — the **minimal bare-metal** equivalent of `unified`: identical flash-tile dashboard, but owns SPI0 directly with no `HAL_USE_SPI`. Kept as the lightweight alternative (~0.5 KB smaller, no ChibiOS SPI dependency).
 - [`ak820pro-flashlcd-qp-lld`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd-qp-lld) — Quantum Painter over the *stock* ChibiOS SN32 SPI driver, with the flash→LCD DMA as a driver extension (`spiSN32FlashDma*`).
-- [`ak820pro-flashlcd-unified`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd-unified) — the `tiles` dashboard driven *entirely* through the ChibiOS SPI driver (no bare-metal bus); a measured proof that one driver can drive the whole panel for +468 bytes and no speed loss.
-- [`ak820pro-flashlcd`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd) / [`-qp`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd-qp) — earlier QP-coexistence experiments (bare-metal SPI0), superseded by the above but kept for history.
+- [`ak820pro-flashlcd`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd) / [`-qp`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd-qp) — earlier QP-coexistence experiments (bare-metal SPI0), superseded but kept for history.
 
 Along the way the port grew two generally-useful ChibiOS SN32 SPI-driver patches — a **FIFO-batched pump** (`spi_fifo_pump.diff`, ~2.5× faster bulk transfers, a general SN32 win) and a **SPI-to-SPI flash→LCD DMA extension** (`spi_flash_dma.diff`). Each branch's `readme.md` lists the exact submodule patches it needs.
 
