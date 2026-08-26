@@ -67,8 +67,15 @@ The result is `a_jazz_ak820pro_default.bin` (copied to the repo root, and under
 `.build/`). Use `-km via` if you want [VIA](https://www.caniusevia.com/)/Vial
 remapping — the matching `via.json` is in [`QMKFWBinaries/`](https://github.com/fpb/ajazz-ak820-pro/tree/main/QMKFWBinaries).
 
-> Pre-built `.bin`s are in [`QMKFWBinaries/`](https://github.com/fpb/ajazz-ak820-pro/tree/main/QMKFWBinaries)
-> for convenience, but they may lag the branches — building yourself gives the current firmware.
+> **Pre-built `.bin`s** are in [`QMKFWBinaries/`](https://github.com/fpb/ajazz-ak820-pro/tree/main/QMKFWBinaries)
+> if you'd rather not build — a `default` and a VIA-enabled build for each of the two recommended branches:
+>
+> | branch | default | VIA |
+> | --- | --- | --- |
+> | `ak820pro-full` | `ak820pro-full_default.bin` | `ak820pro-full_via.bin` |
+> | `ak820pro-flashlcd-unified` | `ak820pro-flashlcd-unified_default.bin` | `ak820pro-flashlcd-unified_via.bin` |
+>
+> The `_via` builds have VIA remapping enabled (load [`via.json`](https://github.com/fpb/ajazz-ak820-pro/tree/main/QMKFWBinaries) in VIA/Vial). Building yourself always gives the newest firmware.
 
 ### 2. Enter bootloader mode
 
