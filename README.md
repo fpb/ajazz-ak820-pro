@@ -34,9 +34,69 @@ Host toolkit: [**ak820ctl**](https://github.com/fpb/time-util-ak820pro) sets the
 clock and (on the `tiles` branch) builds and flashes the LCD image assets and GIF
 animations into external flash. It replaces the old `set-clock` utility.
 
-## QMK Firmware
+## Installing QMK firmware
 
-- Look under the [QMKBinaries](https://github.com/fpb/ajazz-ak820-pro/tree/main/QMKFWBinaries) folder
+Flashing QMK replaces the stock firmware. The whole process is: **build a `.bin`
+→ put the keyboard in bootloader mode → flash it with SonixFlasherC.** Nothing
+here is destructive to the hardware, and you can always go back to stock (see
+[Recovery](#recovery--back-to-stock)).
+
+### 1. Build the firmware
+
+The port lives on branches of [`fpb/qmk_firmware`](https://github.com/fpb/qmk_firmware).
+Set up a [QMK build environment](https://docs.qmk.fm/#/newbs_getting_started) first, then:
+
+```sh
+git clone https://github.com/fpb/qmk_firmware
+cd qmk_firmware
+git checkout ak820pro-full          # or ak820pro-flashlcd-unified (see QMK Support Status above)
+make git-submodule                  # fetch lib/chibios-contrib etc.
+
+# Apply the ChibiOS submodule patches THIS branch needs. The exact list is in
+# keyboards/a_jazz/ak820pro/readme.md -- e.g. for ak820pro-full:
+cd lib/chibios-contrib
+git apply ../../keyboards/a_jazz/ak820pro/hardware_pwm.diff
+git apply ../../keyboards/a_jazz/ak820pro/i2c_fallback.diff
+git apply ../../keyboards/a_jazz/ak820pro/rtc_lld.diff
+cd ../..
+
+qmk compile -kb a_jazz/ak820pro -km default    # or -km via for VIA support
+```
+
+The result is `a_jazz_ak820pro_default.bin` (copied to the repo root, and under
+`.build/`). Use `-km via` if you want [VIA](https://www.caniusevia.com/)/Vial
+remapping — the matching `via.json` is in [`QMKFWBinaries/`](https://github.com/fpb/ajazz-ak820-pro/tree/main/QMKFWBinaries).
+
+> Pre-built `.bin`s are in [`QMKFWBinaries/`](https://github.com/fpb/ajazz-ak820-pro/tree/main/QMKFWBinaries)
+> for convenience, but they may lag the branches — building yourself gives the current firmware.
+
+### 2. Enter bootloader mode
+
+- **First time (still on stock firmware):** short the two pins under the space bar
+  while plugging in the USB cable — see [Bootloader mode](#bootloader-mode) below
+  for exactly where they are. The USB VID/PID becomes `0x0C45/0x7140`.
+- **Once QMK is installed:** just press **`ESC`** while plugging in the cable, or
+  **`Fn`+`ESC`** from a running keyboard — no need to open it up again.
+
+### 3. Flash with SonixFlasherC
+
+Build [SonixFlasherC](https://github.com/SonixQMK/SonixFlasherC) (on macOS Tahoe use
+[this branch of my fork](https://github.com/fpb/SonixFlasherC/tree/fix_for_macos_tahoe)),
+then with the keyboard in bootloader mode:
+
+```sh
+sonixflasher --vidpid 0c45/7140 --file "a_jazz_ak820pro_default.bin"
+```
+
+The keyboard reboots into QMK. On the flash-resident-LCD branches, provision the
+LCD assets and set the clock afterward with [`ak820ctl`](https://github.com/fpb/time-util-ak820pro).
+
+### Recovery / back to stock
+
+Original firmware dumps are in [`StockFWBinaries/`](https://github.com/fpb/ajazz-ak820-pro/tree/main/StockFWBinaries)
+(e.g. `AJAZZ_AK820PRO_PID_8009_V1.13_SN32F290.bin`). Enter bootloader the same way
+(short the pins — the QMK `ESC` shortcut won't exist once you've left QMK) and flash
+the matching stock `.bin` with the same `sonixflasher` command.
 
 ## Chips
 * Main MCU - HFD80CP100 - based on/clone of [SONIX SN32F299](https://www.sonix.com.tw/webapi/fl219869/SN32F299_V1.8_EN.pdf)
