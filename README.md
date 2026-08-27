@@ -8,11 +8,12 @@ Everything below is supported. The two **recommended** firmware branches:
 
 - [`ak820pro-full`](https://github.com/fpb/qmk_firmware/tree/ak820pro-full) — the
   full-featured build with the LCD art embedded in the firmware image. Uses Quantum Painter to display.
-- [`ak820pro-flashlcd-unified`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd-unified) — **the preferred flash-LCD build.** The dashboard runs on pre-rendered RGB565 tiles served from external SPI flash (LCD art + GIF animations provisioned from the host instead of baked into firmware), driven entirely through the ChibiOS SN32 SPI driver (with the `spi_fifo_pump` + `spi_flash_dma` patches). Using the standard driver — rather than a bare-metal bus — keeps it maintainable and leaves Quantum Painter available if it is ever wanted again, at a cost of +468 bytes and no measurable speed loss vs the bare-metal equivalent.
+- [`ak820pro-flashlcd-unified-dualspi`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd-unified-dualspi) — **the preferred flash-LCD build.** The dashboard runs on pre-rendered RGB565 tiles served from external SPI flash (LCD art + GIF animations provisioned from the host instead of baked into firmware), with **both SPI buses driven through the ChibiOS SN32 SPI driver** — the panel (SPI0) and the external flash (SPI1), with the flash→LCD DMA as a driver extension that borrows both (`spi_fifo_pump` + `spi_flash_dma` patches). Using the standard driver — rather than a bare-metal bus — keeps it maintainable and leaves Quantum Painter available if it is ever wanted again, at negligible cost. Hardware-validated: driver-based flash read/erase/program/verify plus the animation DMA.
 
-The port also has related LCD branches, differing mainly in **how the panel is driven** (all render the same dashboard):
+The port also has related LCD branches, differing mainly in **how the panel/flash are driven** (all render the same dashboard):
 
-- [`ak820pro-flashlcd-tiles`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd-tiles) — the **minimal bare-metal** equivalent of `unified`: identical flash-tile dashboard, but owns SPI0 directly with no `HAL_USE_SPI`. Kept as the lightweight alternative (~0.5 KB smaller, no ChibiOS SPI dependency).
+- [`ak820pro-flashlcd-unified`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd-unified) — the SPI0-only-driver **predecessor** of `-dualspi`: the panel goes through the ChibiOS driver but the flash (SPI1) is still bare-metal. Superseded by `-dualspi` (which brings SPI1 under the driver too); kept as the more battle-tested fallback.
+- [`ak820pro-flashlcd-tiles`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd-tiles) — the **minimal bare-metal** equivalent: identical flash-tile dashboard, but owns SPI0 directly with no `HAL_USE_SPI`. Kept as the lightweight alternative (~0.5 KB smaller, no ChibiOS SPI dependency).
 - [`ak820pro-flashlcd-qp-lld`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd-qp-lld) — Quantum Painter over the *stock* ChibiOS SN32 SPI driver, with the flash→LCD DMA as a driver extension (`spiSN32FlashDma*`).
 - [`ak820pro-flashlcd`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd) / [`-qp`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd-qp) — earlier QP-coexistence experiments (bare-metal SPI0), superseded but kept for history.
 
@@ -49,7 +50,7 @@ Set up a [QMK build environment](https://docs.qmk.fm/#/newbs_getting_started) fi
 ```sh
 git clone https://github.com/fpb/qmk_firmware
 cd qmk_firmware
-git checkout ak820pro-full          # or ak820pro-flashlcd-unified (see QMK Support Status above)
+git checkout ak820pro-full          # or ak820pro-flashlcd-unified-dualspi (see QMK Support Status above)
 make git-submodule                  # fetch lib/chibios-contrib etc.
 
 # Apply the ChibiOS submodule patches THIS branch needs. The exact list is in
@@ -72,8 +73,11 @@ remapping — the matching `via.json` is in [`QMKFWBinaries/`](https://github.co
 >
 > | branch | default | VIA |
 > | --- | --- | --- |
-> | `ak820pro-full` | `ak820pro-full_default.bin` | `ak820pro-full_via.bin` |
-> | `ak820pro-flashlcd-unified` | `ak820pro-flashlcd-unified_default.bin` | `ak820pro-flashlcd-unified_via.bin` |
+> | `ak820pro-full` | `ak820pro-full_default.bin` | — (no VIA keymap on this branch) |
+> | `ak820pro-flashlcd-unified-dualspi` (preferred) | `ak820pro-flashlcd-unified-dualspi_default.bin` | `ak820pro-flashlcd-unified-dualspi_via.bin` |
+>
+> The predecessor `ak820pro-flashlcd-unified` and the other flash-LCD branches
+> (`-tiles`, `-qp-lld`, `-qp`, `-flashlcd`) also have `default`/`via` `.bin`s in the folder.
 >
 > The `_via` builds have VIA remapping enabled (load [`via.json`](https://github.com/fpb/ajazz-ak820-pro/tree/main/QMKFWBinaries) in VIA/Vial). Building yourself always gives the newest firmware.
 
