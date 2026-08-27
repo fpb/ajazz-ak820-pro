@@ -41,7 +41,7 @@
         {
           "x": 0.5
         },
-        "0,14\n\n\n\n\n\n\n\n\n\ne0"
+        "0,14\n\n\n\n\n\n\n\n\ne0"
       ],
       [
         {
@@ -260,6 +260,11 @@
       "name": "RGBM_SPD",
       "title": "RGB Matrix: speed -",
       "shortName": "Spd-"
+    },
+    {
+      "name": "ANIM_TOG",
+      "title": "Toggle the flash-animation player",
+      "shortName": "Anim"
     }
   ]
 }
