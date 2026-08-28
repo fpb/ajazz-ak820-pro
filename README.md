@@ -8,11 +8,17 @@ Everything below is supported. The two **recommended** firmware branches:
 
 - [`ak820pro-full`](https://github.com/fpb/qmk_firmware/tree/ak820pro-full) — the
   full-featured build with the LCD art embedded in the firmware image. Uses Quantum Painter to display.
-- [`ak820pro-flashlcd-unified-dualspi`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd-unified-dualspi) — **the preferred flash-LCD build.** The dashboard runs on pre-rendered RGB565 tiles served from external SPI flash (LCD art + GIF animations provisioned from the host instead of baked into firmware), with **both SPI buses driven through the ChibiOS SN32 SPI driver** — the panel (SPI0) and the external flash (SPI1), with the flash→LCD DMA as a driver extension that borrows both (`spi_fifo_pump` + `spi_flash_dma` patches). Using the standard driver — rather than a bare-metal bus — keeps it maintainable and leaves Quantum Painter available if it is ever wanted again, at negligible cost. Hardware-validated: driver-based flash read/erase/program/verify plus the animation DMA.
+- [`ak820pro-flashlcd-dualspi-dual`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd-dualspi-dual) — **the preferred flash-LCD build.** Two dashboard renderers on one shared **dualspi** SPI base (both SPI buses through the ChibiOS SN32 SPI driver + the flash→LCD DMA extension), selected at build time with `-e DASHBOARD_BACKEND=qp|custom`:
+  - `custom` (default) — bare-metal RGB565 **tile** dashboard, assets in external SPI flash (provisioned from the host), no Quantum Painter.
+  - `qp` — **Quantum Painter** dashboard + splash from embedded qgf/qff, drawn through the stock `gc9107_spi` driver.
 
-The port also has related LCD branches, differing mainly in **how the panel/flash are driven** (all render the same dashboard):
+  Both share the flash layer (reads + `ak820ctl` provisioning) and the animation DMA; they differ only in the SPI0/panel path, renderer, and asset encoding. Hardware-validated on both settings.
 
-- [`ak820pro-flashlcd-unified`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd-unified) — the SPI0-only-driver **predecessor** of `-dualspi`: the panel goes through the ChibiOS driver but the flash (SPI1) is still bare-metal. Superseded by `-dualspi` (which brings SPI1 under the driver too); kept as the more battle-tested fallback.
+The port also has related / component LCD branches, differing mainly in **how the panel/flash are driven** (all render the same dashboard):
+
+- [`ak820pro-flashlcd-unified-dualspi`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd-unified-dualspi) — the **custom-only** build (identical to `-dualspi-dual`'s default backend). Both SPI buses on the driver; no Quantum Painter. Folded into `-dualspi-dual` as the `custom` backend.
+- [`ak820pro-flashlcd-unified-dualspi-qp`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd-unified-dualspi-qp) — the **QP-only** build. Folded into `-dualspi-dual` as the `qp` backend.
+- [`ak820pro-flashlcd-unified`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd-unified) — the SPI0-only-driver **predecessor**: panel on the ChibiOS driver but flash (SPI1) still bare-metal. Kept as the more battle-tested fallback.
 - [`ak820pro-flashlcd-tiles`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd-tiles) — the **minimal bare-metal** equivalent: identical flash-tile dashboard, but owns SPI0 directly with no `HAL_USE_SPI`. Kept as the lightweight alternative (~0.5 KB smaller, no ChibiOS SPI dependency).
 - [`ak820pro-flashlcd-qp-lld`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd-qp-lld) — Quantum Painter over the *stock* ChibiOS SN32 SPI driver, with the flash→LCD DMA as a driver extension (`spiSN32FlashDma*`).
 - [`ak820pro-flashlcd`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd) / [`-qp`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd-qp) — earlier QP-coexistence experiments (bare-metal SPI0), superseded but kept for history.
