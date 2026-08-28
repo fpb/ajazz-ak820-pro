@@ -14,10 +14,6 @@ Everything below is supported. The two **recommended** firmware branches:
 
   Both share the flash layer (reads + `ak820ctl` provisioning) and the animation DMA; they differ only in the SPI0/panel path, renderer, and asset encoding. Hardware-validated on both settings.
 
-The port also has one leaner LCD variant:
-
-- [`ak820pro-flashlcd-tiles`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd-tiles) — the **minimal bare-metal** equivalent of `-dualspi-dual`'s custom backend: identical flash-tile dashboard, but owns SPI0 directly with no `HAL_USE_SPI`. The lightweight alternative (~0.5 KB smaller, no ChibiOS SPI dependency).
-
 Along the way the port grew two generally-useful ChibiOS SN32 SPI-driver patches — a **FIFO-batched pump** (`spi_fifo_pump.diff`, ~2.5× faster bulk transfers, a general SN32 win) and a **SPI-to-SPI flash→LCD DMA extension** (`spi_flash_dma.diff`). Each branch's `readme.md` lists the exact submodule patches it needs.
 
 HW Support Status:
@@ -30,11 +26,11 @@ HW Support Status:
 - [x] Wireless support (BT/2.4G) — custom CH582F driver with ACK/retry reliability
 - [x] Clock support
 - [x] RGB leds (per-key, hardware PWM across CT16B0/B1/B2)
-- [x] Flash Memory — LCD assets **and** GIF animations, provisioned over HID (`tiles` branch)
+- [x] Flash Memory — LCD assets **and** GIF animations, provisioned over HID (`dualspi-dual` branch)
 
 Host toolkit: [**ak820ctl**](https://github.com/fpb/time-util-ak820pro) sets the LCD
-clock and (on the `tiles` branch) builds and flashes the LCD image assets and GIF
-animations into external flash. It replaces the old `set-clock` utility.
+clock and (on the flash-resident `dualspi-dual` branch) builds and flashes the LCD image
+assets and GIF animations into external flash. It replaces the old `set-clock` utility.
 
 ## Installing QMK firmware
 
@@ -77,8 +73,6 @@ remapping — the matching `via.json` is in [`QMKFWBinaries/`](https://github.co
 > | `ak820pro-full` | `ak820pro-full_default.bin` | — (no VIA keymap on this branch) |
 > | `ak820pro-flashlcd-dualspi-dual` (preferred, custom backend) | `ak820pro-flashlcd-dualspi-dual_custom_default.bin` | `ak820pro-flashlcd-dualspi-dual_custom_via.bin` |
 > | `ak820pro-flashlcd-dualspi-dual` (QP backend, `-e DASHBOARD_BACKEND=qp`) | `ak820pro-flashlcd-dualspi-dual_qp_default.bin` | `ak820pro-flashlcd-dualspi-dual_qp_via.bin` |
->
-> `-tiles` also has `default`/`via` `.bin`s in the folder.
 >
 > The `_via` builds have VIA remapping enabled (load [`via.json`](https://github.com/fpb/ajazz-ak820-pro/tree/main/QMKFWBinaries) in VIA/Vial). Building yourself always gives the newest firmware.
 
