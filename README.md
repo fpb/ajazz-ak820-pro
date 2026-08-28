@@ -6,9 +6,9 @@ AJAZZ AK820PRO (BT/USB/2.4G 81 keys) Reverse Engineering for QMK port
 
 Everything below is supported. The two **recommended** firmware branches:
 
-- [`ak820pro-qp-singlespi`](https://github.com/fpb/qmk_firmware/tree/ak820pro-qp-singlespi) — the
+- [`ak820pro-lcd-embedded`](https://github.com/fpb/qmk_firmware/tree/ak820pro-lcd-embedded) — the
   full-featured build with the LCD art embedded in the firmware image. Uses Quantum Painter to display.
-- [`ak820pro-qp-dualspi`](https://github.com/fpb/qmk_firmware/tree/ak820pro-qp-dualspi) — **the preferred flash-LCD build.** Two dashboard renderers on one shared **dualspi** SPI base (both SPI buses through the ChibiOS SN32 SPI driver + the flash→LCD DMA extension), selected at build time with `-e DASHBOARD_BACKEND=qp|custom`:
+- [`ak820pro-lcd-flash`](https://github.com/fpb/qmk_firmware/tree/ak820pro-lcd-flash) — **the preferred flash-LCD build.** Two dashboard renderers on one shared **dualspi** SPI base (both SPI buses through the ChibiOS SN32 SPI driver + the flash→LCD DMA extension), selected at build time with `-e DASHBOARD_BACKEND=qp|custom`:
   - `custom` (default) — bare-metal RGB565 **tile** dashboard, assets in external SPI flash (provisioned from the host), no Quantum Painter.
   - `qp` — **Quantum Painter** dashboard + splash from embedded qgf/qff, drawn through the stock `gc9107_spi` driver.
 
@@ -26,10 +26,10 @@ HW Support Status:
 - [x] Wireless support (BT/2.4G) — custom CH582F driver with ACK/retry reliability
 - [x] Clock support
 - [x] RGB leds (per-key, hardware PWM across CT16B0/B1/B2)
-- [x] Flash Memory — LCD assets **and** GIF animations, provisioned over HID (`qp-dualspi` branch)
+- [x] Flash Memory — LCD assets **and** GIF animations, provisioned over HID (`lcd-flash` branch)
 
 Host toolkit: [**ak820ctl**](https://github.com/fpb/time-util-ak820pro) sets the LCD
-clock and (on the flash-resident `qp-dualspi` branch) builds and flashes the LCD image
+clock and (on the flash-resident `lcd-flash` branch) builds and flashes the LCD image
 assets and GIF animations into external flash. It replaces the old `set-clock` utility.
 
 ## Installing QMK firmware
@@ -47,11 +47,11 @@ Set up a [QMK build environment](https://docs.qmk.fm/#/newbs_getting_started) fi
 ```sh
 git clone https://github.com/fpb/qmk_firmware
 cd qmk_firmware
-git checkout ak820pro-qp-singlespi          # or ak820pro-qp-dualspi (see QMK Support Status above)
+git checkout ak820pro-lcd-embedded          # or ak820pro-lcd-flash (see QMK Support Status above)
 make git-submodule                  # fetch lib/chibios-contrib etc.
 
 # Apply the ChibiOS submodule patches THIS branch needs. The exact list is in
-# keyboards/a_jazz/ak820pro/readme.md -- e.g. for ak820pro-qp-singlespi:
+# keyboards/a_jazz/ak820pro/readme.md -- e.g. for ak820pro-lcd-embedded:
 cd lib/chibios-contrib
 git apply ../../keyboards/a_jazz/ak820pro/hardware_pwm.diff
 git apply ../../keyboards/a_jazz/ak820pro/i2c_fallback.diff
@@ -70,9 +70,9 @@ remapping — the matching `via.json` is in [`QMKFWBinaries/`](https://github.co
 >
 > | branch | default | VIA |
 > | --- | --- | --- |
-> | `ak820pro-qp-singlespi` | `ak820pro-qp-singlespi_default.bin` | — (no VIA keymap on this branch) |
-> | `ak820pro-qp-dualspi` (preferred, custom backend) | `ak820pro-qp-dualspi_custom_default.bin` | `ak820pro-qp-dualspi_custom_via.bin` |
-> | `ak820pro-qp-dualspi` (QP backend, `-e DASHBOARD_BACKEND=qp`) | `ak820pro-qp-dualspi_qp_default.bin` | `ak820pro-qp-dualspi_qp_via.bin` |
+> | `ak820pro-lcd-embedded` | `ak820pro-lcd-embedded_default.bin` | — (no VIA keymap on this branch) |
+> | `ak820pro-lcd-flash` (preferred, custom backend) | `ak820pro-lcd-flash_custom_default.bin` | `ak820pro-lcd-flash_custom_via.bin` |
+> | `ak820pro-lcd-flash` (QP backend, `-e DASHBOARD_BACKEND=qp`) | `ak820pro-lcd-flash_qp_default.bin` | `ak820pro-lcd-flash_qp_via.bin` |
 >
 > The `_via` builds have VIA remapping enabled (load [`via.json`](https://github.com/fpb/ajazz-ak820-pro/tree/main/QMKFWBinaries) in VIA/Vial). Building yourself always gives the newest firmware.
 
