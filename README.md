@@ -14,10 +14,9 @@ Everything below is supported. The two **recommended** firmware branches:
 
   Both share the flash layer (reads + `ak820ctl` provisioning) and the animation DMA; they differ only in the SPI0/panel path, renderer, and asset encoding. Hardware-validated on both settings.
 
-The port also has related / component LCD branches, differing mainly in **how the panel/flash are driven** (all render the same dashboard):
+The port also has one leaner LCD variant:
 
 - [`ak820pro-flashlcd-tiles`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd-tiles) — the **minimal bare-metal** equivalent of `-dualspi-dual`'s custom backend: identical flash-tile dashboard, but owns SPI0 directly with no `HAL_USE_SPI`. The lightweight alternative (~0.5 KB smaller, no ChibiOS SPI dependency).
-- [`ak820pro-flashlcd-unified-dualspi`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd-unified-dualspi) / [`-unified-dualspi-qp`](https://github.com/fpb/qmk_firmware/tree/ak820pro-flashlcd-unified-dualspi-qp) — the standalone **custom-only** and **QP-only** builds, now **folded into `-dualspi-dual`** as its two backends. Kept as the individually battle-tested variants.
 
 Along the way the port grew two generally-useful ChibiOS SN32 SPI-driver patches — a **FIFO-batched pump** (`spi_fifo_pump.diff`, ~2.5× faster bulk transfers, a general SN32 win) and a **SPI-to-SPI flash→LCD DMA extension** (`spi_flash_dma.diff`). Each branch's `readme.md` lists the exact submodule patches it needs.
 
@@ -52,7 +51,7 @@ Set up a [QMK build environment](https://docs.qmk.fm/#/newbs_getting_started) fi
 ```sh
 git clone https://github.com/fpb/qmk_firmware
 cd qmk_firmware
-git checkout ak820pro-full          # or ak820pro-flashlcd-unified-dualspi (see QMK Support Status above)
+git checkout ak820pro-full          # or ak820pro-flashlcd-dualspi-dual (see QMK Support Status above)
 make git-submodule                  # fetch lib/chibios-contrib etc.
 
 # Apply the ChibiOS submodule patches THIS branch needs. The exact list is in
@@ -76,10 +75,10 @@ remapping — the matching `via.json` is in [`QMKFWBinaries/`](https://github.co
 > | branch | default | VIA |
 > | --- | --- | --- |
 > | `ak820pro-full` | `ak820pro-full_default.bin` | — (no VIA keymap on this branch) |
-> | `ak820pro-flashlcd-unified-dualspi` (preferred) | `ak820pro-flashlcd-unified-dualspi_default.bin` | `ak820pro-flashlcd-unified-dualspi_via.bin` |
+> | `ak820pro-flashlcd-dualspi-dual` (preferred, custom backend) | `ak820pro-flashlcd-dualspi-dual_custom_default.bin` | `ak820pro-flashlcd-dualspi-dual_custom_via.bin` |
+> | `ak820pro-flashlcd-dualspi-dual` (QP backend, `-e DASHBOARD_BACKEND=qp`) | `ak820pro-flashlcd-dualspi-dual_qp_default.bin` | `ak820pro-flashlcd-dualspi-dual_qp_via.bin` |
 >
-> `ak820pro-flashlcd-unified-dualspi-qp` (the QP backend) and `-tiles` also have
-> `default`/`via` `.bin`s in the folder.
+> `-tiles` also has `default`/`via` `.bin`s in the folder.
 >
 > The `_via` builds have VIA remapping enabled (load [`via.json`](https://github.com/fpb/ajazz-ak820-pro/tree/main/QMKFWBinaries) in VIA/Vial). Building yourself always gives the newest firmware.
 
