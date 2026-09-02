@@ -27,6 +27,7 @@ HW Support Status:
 - [x] Clock support
 - [x] RGB leds (per-key, hardware PWM across CT16B0/B1/B2)
 - [x] Flash Memory — LCD assets **and** GIF animations, provisioned over HID (`lcd-flash` branch)
+- [x] Idle sleep — LCD + RGB blank after 3 min with no key/encoder input (or on a real USB bus-suspend); any key or the encoder wakes them, and a running animation resumes (`lcd-flash` branch)
 
 Host toolkit: [**ak820ctl**](https://github.com/fpb/time-util-ak820pro) sets the LCD
 clock and (on the flash-resident `lcd-flash` branch) builds and flashes the LCD image
