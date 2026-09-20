@@ -4,6 +4,8 @@ AJAZZ AK820PRO (BT/USB/2.4G 81 keys) Reverse Engineering for QMK port
 
 # QMK Support Status
 
+**Disclaimer:** There are at least two hardware versions of this keyboard and even the same board revision seems to have been shipped with different LCD panel setups. *Use at your own risk!*
+
 Everything below is supported. The two **recommended** firmware branches:
 
 - [`ak820pro-lcd-embedded`](https://github.com/fpb/qmk_firmware/tree/ak820pro-lcd-embedded) — the
