@@ -69,15 +69,34 @@ The result is `a_jazz_ak820pro_default.bin` (copied to the repo root, and under
 remapping — the matching `via.json` is in [`QMKFWBinaries/`](https://github.com/fpb/ajazz-ak820-pro/tree/main/QMKFWBinaries).
 
 > **Pre-built `.bin`s** are in [`QMKFWBinaries/`](https://github.com/fpb/ajazz-ak820-pro/tree/main/QMKFWBinaries)
-> if you'd rather not build — a `default` and a VIA-enabled build for each of the two recommended branches:
+> if you'd rather not build — a `default` and a VIA-enabled build for each of the two recommended branches,
+> in both panel variants (see **LCD panel hardware revision** below):
 >
-> | branch | default | VIA |
-> | --- | --- | --- |
-> | `ak820pro-lcd-embedded` | `ak820pro-lcd-embedded_default.bin` | — (no VIA keymap on this branch) |
-> | `ak820pro-lcd-flash` (preferred, custom backend) | `ak820pro-lcd-flash_custom_default.bin` | `ak820pro-lcd-flash_custom_via.bin` |
-> | `ak820pro-lcd-flash` (QP backend, `-e DASHBOARD_BACKEND=qp`) | `ak820pro-lcd-flash_qp_default.bin` | `ak820pro-lcd-flash_qp_via.bin` |
+> | branch | panel | default | VIA |
+> | --- | --- | --- | --- |
+> | `ak820pro-lcd-embedded` | v1 | `ak820pro-lcd-embedded_v1_default.bin` | — (no VIA keymap on this branch) |
+> | `ak820pro-lcd-embedded` | v2 ⚠️ untested | `ak820pro-lcd-embedded_v2_default.bin` | — (no VIA keymap on this branch) |
+> | `ak820pro-lcd-flash` (preferred, custom backend) | v1 | `ak820pro-lcd-flash_custom_v1_default.bin` | `ak820pro-lcd-flash_custom_v1_via.bin` |
+> | `ak820pro-lcd-flash` (preferred, custom backend) | v2 ⚠️ untested | `ak820pro-lcd-flash_custom_v2_default.bin` | `ak820pro-lcd-flash_custom_v2_via.bin` |
+> | `ak820pro-lcd-flash` (QP backend, `-e DASHBOARD_BACKEND=qp`) | v1 | `ak820pro-lcd-flash_qp_v1_default.bin` | `ak820pro-lcd-flash_qp_v1_via.bin` |
+> | `ak820pro-lcd-flash` (QP backend, `-e DASHBOARD_BACKEND=qp`) | v2 ⚠️ untested | `ak820pro-lcd-flash_qp_v2_default.bin` | `ak820pro-lcd-flash_qp_v2_via.bin` |
 >
 > The `_via` builds have VIA remapping enabled (load [`via.json`](https://github.com/fpb/ajazz-ak820-pro/tree/main/QMKFWBinaries) in VIA/Vial). Building yourself always gives the newest firmware.
+
+### LCD panel hardware revision
+
+At least two panel revisions of this keyboard exist, mounted at different orientations, and
+one needs display inversion the other must NOT have — flashing the wrong variant shows an
+upside-down picture with inverted/swapped-looking colours (reads as broken firmware, not a
+config mismatch). If your screen looks like that, try the **other** panel variant's binary.
+
+> ⚠️ **The `v2` binaries above are UNTESTED on real hardware.** The fix was ported from a
+> report of inverted/offset/R-B-swapped panels and cross-referenced against a fork that hit
+> and fixed this on its own unit for one backend; it compiles clean for all backends here,
+> but nobody has confirmed it on an actual `v2` panel yet. If you have one of the affected
+> units, please try it and report back (see [`ak820pro/readme.md`](https://github.com/fpb/qmk_firmware/blob/ak820pro-lcd-flash/keyboards/a_jazz/ak820pro/readme.md#lcd-panel-hardware-revision) for the technical detail).
+> `v1` is the original, hardware-confirmed-working variant — stick with it unless your
+> screen actually shows the symptom above.
 
 ### 2. Enter bootloader mode
 
